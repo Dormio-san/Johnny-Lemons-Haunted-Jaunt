@@ -1,10 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class PlayerMovement : MonoBehaviour
 {
     public float turnSpeed = 21f;
+    public GameObject speedBoost;
+    public AudioSource speedSound;
+    public GameObject speedUI;
+    public float playerSpeed = 1f;
 
     Animator m_Animator;
     Rigidbody m_Rigidbody;
@@ -18,6 +23,8 @@ public class PlayerMovement : MonoBehaviour
         m_Animator = GetComponent<Animator>();
         m_Rigidbody = GetComponent<Rigidbody>();
         m_AudioSource = GetComponent<AudioSource>();
+        Instantiate(speedBoost, new Vector3(-2.01f, -0.32f, 5.18f), Quaternion.identity);
+        Instantiate(speedBoost, new Vector3(-2.77f, -0.8f, 9.5f), Quaternion.identity);
     }
 
     // Update is called once per frame
@@ -34,9 +41,9 @@ public class PlayerMovement : MonoBehaviour
         bool isWalking = hasHorizontalInput || hasVerticalInput;
         m_Animator.SetBool("IsWalking", isWalking);
 
-        if(isWalking)
+        if (isWalking)
         {
-            if(!m_AudioSource.isPlaying)
+            if (!m_AudioSource.isPlaying)
             {
                 m_AudioSource.Play();
             }
@@ -52,7 +59,26 @@ public class PlayerMovement : MonoBehaviour
 
     void OnAnimatorMove()
     {
-        m_Rigidbody.MovePosition(m_Rigidbody.position + m_Movement * m_Animator.deltaPosition.magnitude);
+        m_Rigidbody.MovePosition(m_Rigidbody.position + m_Movement * m_Animator.deltaPosition.magnitude * playerSpeed);
         m_Rigidbody.MoveRotation(m_Rotation);
+    }
+
+    void OnTriggerEnter(Collider pickup)
+    {
+        if (pickup.name == "Bottle_Mana(Clone)")
+        {
+            speedUI.SetActive(true);
+            playerSpeed = 2f;
+            StartCoroutine("SpeedGone");
+            Destroy(pickup.gameObject);
+            speedSound.Play();
+        }
+    }
+
+    IEnumerator SpeedGone()
+    {
+        yield return new WaitForSeconds(5f);
+        playerSpeed = 1;
+        speedUI.SetActive(false);
     }
 }

@@ -10,6 +10,8 @@ public class PlayerMovement : MonoBehaviour
     public AudioSource speedSound;
     public GameObject speedUI;
     public float playerSpeed = 1f;
+    public float moveDirection = 1f;
+    public GameObject inverseUI;
 
     Animator m_Animator;
     Rigidbody m_Rigidbody;
@@ -25,15 +27,16 @@ public class PlayerMovement : MonoBehaviour
         m_AudioSource = GetComponent<AudioSource>();
         Instantiate(speedBoost, new Vector3(-2.01f, -0.32f, 5.18f), Quaternion.identity);
         Instantiate(speedBoost, new Vector3(-2.77f, -0.8f, 9.5f), Quaternion.identity);
+        StartCoroutine("ChangeDirection");
     }
 
     // Update is called once per frame
     void FixedUpdate()
-    {
+    {    
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
 
-        m_Movement.Set(horizontal, 0f, vertical);
+        m_Movement.Set(horizontal * moveDirection, 0f * moveDirection, vertical * moveDirection);
         m_Movement.Normalize();
 
         bool hasHorizontalInput = !Mathf.Approximately(horizontal, 0f);
@@ -81,4 +84,20 @@ public class PlayerMovement : MonoBehaviour
         playerSpeed = 1;
         speedUI.SetActive(false);
     }
+
+    IEnumerator ChangeDirection()
+    {
+        yield return new WaitForSeconds(Random.Range(12.5f, 16.5f));
+        moveDirection = -1f;
+        inverseUI.SetActive(true);
+        StartCoroutine("ResetDirection");
+    }
+
+    IEnumerator ResetDirection()
+    {
+        yield return new WaitForSeconds(Random.Range(5.5f, 7.5f));
+        moveDirection = 1f;
+        inverseUI.SetActive(false);
+        StartCoroutine("ChangeDirection");
+    }    
 }

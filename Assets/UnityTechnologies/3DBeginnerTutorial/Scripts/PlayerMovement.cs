@@ -26,7 +26,7 @@ public class PlayerMovement : MonoBehaviour
         m_Rigidbody = GetComponent<Rigidbody>();
         m_AudioSource = GetComponent<AudioSource>();
         Instantiate(speedBoost, new Vector3(-2.01f, -0.32f, 5.18f), Quaternion.identity);
-        Instantiate(speedBoost, new Vector3(-2.01f, -0.8f, 9.5f), Quaternion.identity);
+        Instantiate(speedBoost, new Vector3(-1.17f, -0.8f, 10.45f), Quaternion.identity);
         StartCoroutine("ChangeDirection");
     }
 

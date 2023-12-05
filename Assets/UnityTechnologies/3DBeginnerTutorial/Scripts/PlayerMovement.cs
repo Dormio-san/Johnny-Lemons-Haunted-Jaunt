@@ -26,7 +26,7 @@ public class PlayerMovement : MonoBehaviour
         m_Rigidbody = GetComponent<Rigidbody>();
         m_AudioSource = GetComponent<AudioSource>();
         Instantiate(speedBoost, new Vector3(-2.01f, -0.32f, 5.18f), Quaternion.identity);
-        Instantiate(speedBoost, new Vector3(-2.77f, -0.8f, 9.5f), Quaternion.identity);
+        Instantiate(speedBoost, new Vector3(-2.01f, -0.8f, 9.5f), Quaternion.identity);
         StartCoroutine("ChangeDirection");
     }
 
@@ -36,6 +36,7 @@ public class PlayerMovement : MonoBehaviour
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
 
+        //Multiply each movement value by a variable. When variable is positive, movement is normal. When the variable is negative, movement becomes inversed.
         m_Movement.Set(horizontal * moveDirection, 0f * moveDirection, vertical * moveDirection);
         m_Movement.Normalize();
 
@@ -87,6 +88,7 @@ public class PlayerMovement : MonoBehaviour
 
     IEnumerator ChangeDirection()
     {
+        //Inverts player's controls after a random amount of time within the range and displays text on screen.
         yield return new WaitForSeconds(Random.Range(12.5f, 16.5f));
         moveDirection = -1f;
         inverseUI.SetActive(true);
@@ -95,6 +97,7 @@ public class PlayerMovement : MonoBehaviour
 
     IEnumerator ResetDirection()
     {
+        //Returns player's controls back to normal after a set amount of time and repeats the cycle.
         yield return new WaitForSeconds(Random.Range(5.5f, 7.5f));
         moveDirection = 1f;
         inverseUI.SetActive(false);

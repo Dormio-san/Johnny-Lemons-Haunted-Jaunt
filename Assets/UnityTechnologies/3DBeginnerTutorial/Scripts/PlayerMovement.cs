@@ -12,6 +12,8 @@ public class PlayerMovement : MonoBehaviour
     public float playerSpeed = 1f;
     public float moveDirection = 1f;
     public GameObject inverseUI;
+    public AudioSource alertSound;
+    public GameObject alert;
 
     Animator m_Animator;
     Rigidbody m_Rigidbody;
@@ -90,9 +92,13 @@ public class PlayerMovement : MonoBehaviour
     {
         //Inverts player's controls after a random amount of time within the range and displays text on screen.
         yield return new WaitForSeconds(Random.Range(12.5f, 16.5f));
+        alertSound.Play();
+        alert.SetActive(true);
         moveDirection = -1f;
         inverseUI.SetActive(true);
         StartCoroutine("ResetDirection");
+        yield return new WaitForSeconds(2.3f);
+        alert.SetActive(false);
     }
 
     IEnumerator ResetDirection()

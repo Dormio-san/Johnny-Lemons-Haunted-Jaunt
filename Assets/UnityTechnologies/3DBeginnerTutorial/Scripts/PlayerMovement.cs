@@ -97,7 +97,7 @@ public class PlayerMovement : MonoBehaviour
         moveDirection = -1f;
         inverseUI.SetActive(true);
         StartCoroutine("ResetDirection");
-        yield return new WaitForSeconds(2.3f);
+        yield return new WaitForSeconds(2.1f);
         alert.SetActive(false);
     }
 

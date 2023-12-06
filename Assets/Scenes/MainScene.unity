@@ -1695,6 +1695,7 @@ MonoBehaviour:
   exitAudio: {fileID: 1601844845}
   caughtBackgroundImageCanvasGroup: {fileID: 27917783}
   caughtAudio: {fileID: 801705877}
+  powerupUI: {fileID: 1219896941}
 --- !u!1 &1120313510
 GameObject:
   m_ObjectHideFlags: 0

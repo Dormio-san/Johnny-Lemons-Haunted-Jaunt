@@ -12,17 +12,17 @@ public class GameEnding : MonoBehaviour
     public AudioSource exitAudio;
     public CanvasGroup caughtBackgroundImageCanvasGroup;
     public AudioSource caughtAudio;
-    public PlayerMovement pMS;
+    //private PlayerMovement pMS;
 
     bool m_IsPlayerAtExit;
     bool m_IsPlayerCaught;
     float m_Timer;
     bool m_HasAudioPlayed;
 
-    void Start()
-    {
-        pMS = GameObject.Find("JohnLemon").GetComponent<PlayerMovement>();
-    }
+    // void Start()
+    // {
+    //     pMS = GameObject.Find("JohnLemon").GetComponent<PlayerMovement>();
+    // }
 
     void OnTriggerEnter(Collider other)
     {
@@ -40,17 +40,17 @@ public class GameEnding : MonoBehaviour
     void Update()
     {
        if(m_IsPlayerAtExit)
-       {
-            pMS.inverseUI.SetActive(false);
-            pMS.speedUI.SetActive(false);
+        {
+            //pMS.inverseUI.SetActive(false);
+            //pMS.speedUI.SetActive(false);
             EndLevel(exitBackgroundImageCanvasGroup, false, exitAudio);
-       }
+        }
        else if(m_IsPlayerCaught)
-       {
-            pMS.inverseUI.SetActive(false);
-            pMS.speedUI.SetActive(false);
+        {
+            //pMS.inverseUI.SetActive(false);
+            //pMS.speedUI.SetActive(false);
             EndLevel(caughtBackgroundImageCanvasGroup, true, caughtAudio);
-       }
+        }
     }
 
     void EndLevel(CanvasGroup imageCanvasGroup, bool doRestart, AudioSource audioSource)
